@@ -1,57 +1,63 @@
-# Audio to Text Classifier
+# Classificador de Sons Não Vocais
 
-A deep learning model based on Whisper that converts non-speech audio into textual descriptions.
+Sistema baseado em GPT/Whisper para identificação e transcrição de sons não vocais, como sirenes, quedas de objetos, colisões, motores de veículos, etc.
 
-## Overview
+## Descrição
 
-This project uses OpenAI's Whisper model, fine-tuned to classify and describe non-speech audio signals into text. It can be used for various applications such as environmental sound classification, machine sound analysis, and audio event detection.
+Este projeto é parte de um trabalho de pesquisa que visa desenvolver um sistema capaz de transformar sons não vocais em descrições textuais. Utilizamos um modelo baseado no Whisper da OpenAI, fine-tuned para identificar diferentes categorias de sons ambientais.
 
-## Installation
-
-```bash
-git clone https://github.com/rubemalmeida/audio-classifier
-cd audio-classifier
-pip install -r requirements.txt
-```
-
-## Usage
-
-### Training
-
-Place your audio files in folders named after their categories under the `sounds` directory:
+## Estrutura do Projeto
 
 ```
-sounds/
-├── categoryX/
-│ ├── sound1.wav
-│ └── sound2.wav
-└── category2/
-  ├── sound3.wav
-  └── sound4.wav
+audio-classifier/
+├── src/
+│   ├── ml/            # Módulos de machine learning
+│   ├── backend/        # API FastAPI
+│   └── frontend/       # Interface web (Flask)
+├── data/
+│   ├── sounds/         # Dados de treinamento
+│   └── trained_model/  # Modelos salvos
+└── reports/            # Documentação e relatórios
 ```
 
-Then run:
+## Funcionalidades
 
-```bash
-python src/train.py
-```
+- Interface web para upload ou gravação de áudios
+- API REST para processamento e classificação de áudios
+- Suporte para arquivos .wav
+- Processamento automático para frequência de 16kHz
+- Limite de 30 segundos por áudio
+- Modelo treinado para identificar diversas categorias de sons não vocais
 
-### Inference
-
-```bash
-python src/infer.py
-```
-
-## Requirements
+## Requisitos
 
 - Python 3.8+
-- PyTorch 2.0+
-- See requirements.txt for full list
+- PyTorch
+- Whisper
+- FastAPI
+- Flask
+- Outras dependências especificadas em requirements.txt
 
-## License
+## Instalação
 
-MIT
+1. Clone o repositório
+2. Instale as dependências: `pip install -r requirements.txt`
+3. Execute o backend: `python -m src.backend.main`
+4. Execute o frontend: `python ./src/frontend/app.py`
 
-## Contributing
+## Uso
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+1. Acesse a interface web em http://localhost:5000
+2. Faça upload de um arquivo de áudio ou grave um novo
+3. Clique em "Classificar Som"
+4. Visualize os resultados da classificação
+
+## Treinamento do Modelo
+
+Para treinar um novo modelo:
+
+```bash
+cd src/ml
+python train.py
+```
+
