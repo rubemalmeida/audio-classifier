@@ -43,7 +43,7 @@ audio-classifier/
 1. Clone o repositório
 2. Instale as dependências: `pip install -r requirements.txt`
 3. Execute o backend: `python -m src.backend.main`
-4. Execute o frontend: `python ./src/frontend/app.py`
+4. Execute o frontend: `python -m src.frontend.app`
 
 ## Uso
 

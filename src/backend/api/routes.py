@@ -15,10 +15,10 @@ classifier = SoundClassifier()
 async def classify_audio(file: UploadFile = File(...)):
     """Classify the uploaded audio file"""
     # Validate file type
-    if not file.filename.endswith((".wav", ".mp3", ".ogg")):
+    if not file.filename.endswith((".wav", ".mp3")):
         raise HTTPException(
             status_code=400,
-            detail="Unsupported file format. Please upload a .wav, .mp3, or .ogg file.",
+            detail="Unsupported file format. Please upload a .wav or .mp3 file.",
         )
 
     # Save uploaded file to temp location
@@ -45,14 +45,6 @@ async def classify_audio(file: UploadFile = File(...)):
         if os.path.exists(temp_file):
             os.remove(temp_file)
         raise HTTPException(status_code=500, detail=f"Error processing audio: {str(e)}")
-
-
-@router.post("/record")
-async def process_recorded_audio(file: UploadFile = File(...)):
-    """Process and classify audio recorded from the frontend"""
-    # Implementation similar to classify_audio
-    # The frontend will send the recorded audio as a file
-    return await classify_audio(file)
 
 
 @router.get("/health")
