@@ -44,29 +44,29 @@ class DirectoryBasedSoundDataset(Dataset):
         audio_path = self.audio_paths[idx]
         label = self.labels[idx]
 
-        # Carrega o áudio com a biblioteca torchaudio para melhor integração com PyTorch
+        # Load the audio with torchaudio library for better integration with PyTorch
         try:
             waveform, sample_rate = torchaudio.load(audio_path)
 
-            # Resample se necessário
+            # Resample if necessary
             if sample_rate != self.target_sample_rate:
                 resampler = torchaudio.transforms.Resample(
                     sample_rate, self.target_sample_rate
                 )
                 waveform = resampler(waveform)
 
-            # Converte para mono se estiver em estéreo
+            # Convert to mono if in stereo
             if waveform.shape[0] > 1:
                 waveform = torch.mean(waveform, dim=0, keepdim=True)
 
-            # Aplicar a transformação (mel spectrogram)
+            # Apply the transformation (mel spectrogram)
             features = self.transformation(waveform)
 
             return features, torch.tensor(label, dtype=torch.long)
 
         except Exception as e:
             print(f"Erro ao carregar {audio_path}: {e}")
-            # Retorna um tensor de zeros como fallback
+            # Return a tensor of zeros as fallback
             return torch.zeros((80, 3000)), torch.tensor(0, dtype=torch.long)
 
 
@@ -91,16 +91,16 @@ def train(
         sample_rate=16000, n_fft=400, hop_length=160, n_mels=80
     )
 
-    # Criando o dataset com base nos diretórios
+    # Creating the dataset based on directories
     full_dataset = DirectoryBasedSoundDataset(
         audio_dir=audio_dir, transformation=mel_spectrogram, target_sample_rate=16000
     )
 
-    # Determinar número de classes a partir do dataset
+    # Determine number of classes from the dataset
     num_classes = len(set(full_dataset.labels))
 
-    # Modificar a arquitetura para classificação
-    model.encoder.ln_post = nn.Identity()  # Remove a normalização existente
+    # Modify the architecture for classification
+    model.encoder.ln_post = nn.Identity()  # Remove the existing normalization
     model.encoder.add_module(
         "classifier",
         nn.Sequential(
@@ -112,7 +112,7 @@ def train(
     )
     model = model.to(device)
 
-    # Dividir em treino e validação
+    # Split into training and validation
     dataset_size = len(full_dataset)
     indices = list(range(dataset_size))
     random.shuffle(indices)
@@ -120,7 +120,7 @@ def train(
     train_indices = indices[split:]
     val_indices = indices[:split]
 
-    # Criar os data loaders
+    # Create data loaders
     train_sampler = torch.utils.data.SubsetRandomSampler(train_indices)
     val_sampler = torch.utils.data.SubsetRandomSampler(val_indices)
 
@@ -183,7 +183,7 @@ def train(
     # Save the model
     save_model(model, f"whisper_{model_size}_nonvocal_classifier.pt")
 
-    # Salvar o mapeamento de classes
+    # Save the class mapping
     with open(os.path.join("data/trained_model", "class_mapping.txt"), "w") as f:
         for idx, class_name in full_dataset.class_mapping.items():
             f.write(f"{idx},{class_name}\n")

@@ -1,60 +1,61 @@
-# Classificador de Sons Não Vocais
+# Non-Vocal Sound Classifier
 
-Sistema baseado em GPT/Whisper para identificação e transcrição de sons não vocais, como sirenes, quedas de objetos, colisões, motores de veículos, etc.
+A GPT/Whisper-based system for identification and transcription of non-vocal sounds, such as sirens, falling objects, collisions, vehicle engines, etc.
 
-## Descrição
+## Description
 
-Este projeto é parte de um trabalho de pesquisa que visa desenvolver um sistema capaz de transformar sons não vocais em descrições textuais. Utilizamos um modelo baseado no Whisper da OpenAI, fine-tuned para identificar diferentes categorias de sons ambientais.
+This project is part of a research work aimed at developing a system capable of transforming non-vocal sounds into textual descriptions. We use a model based on OpenAI's Whisper, fine-tuned to identify different categories of environmental sounds.
 
-## Estrutura do Projeto
+## Project Structure
+
 
 ```
 audio-classifier/
 ├── src/
-│   ├── ml/            # Módulos de machine learning
-│   ├── backend/        # API FastAPI
-│   └── frontend/       # Interface web (Flask)
+│ ├── ml/ # Machine learning modules
+│ ├── backend/ # FastAPI API
+│ └── frontend/ # Web interface (Flask)
 ├── data/
-│   ├── sounds/         # Dados de treinamento
-│   └── trained_model/  # Modelos salvos
-└── reports/            # Documentação e relatórios
+│ ├── sounds/ # Training data
+│ └── trained_model/ # Saved models
+└── reports/ 
 ```
 
-## Funcionalidades
+## Features
 
-- Interface web para upload ou gravação de áudios
-- API REST para processamento e classificação de áudios
-- Suporte para arquivos .wav
-- Processamento automático para frequência de 16kHz
-- Limite de 30 segundos por áudio
-- Modelo treinado para identificar diversas categorias de sons não vocais
+- Web interface for uploading or recording audio
+- REST API for processing and classifying audio
+- Support for .wav files
+- Automatic processing to 16kHz frequency
+- 30-second limit per audio
+- Model trained to identify various categories of non-vocal sounds
 
-## Requisitos
+## Requirements
 
 - Python 3.8+
 - PyTorch
 - Whisper
 - FastAPI
 - Flask
-- Outras dependências especificadas em requirements.txt
+- Other dependencies specified in requirements.txt
 
-## Instalação
+## Installation
 
-1. Clone o repositório
-2. Instale as dependências: `pip install -r requirements.txt`
-3. Execute o backend: `python -m src.backend.main`
-4. Execute o frontend: `python -m src.frontend.app`
+1. Clone the repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the backend: `python -m src.backend.main`
+4. Run the frontend: `python -m src.frontend.app`
 
-## Uso
+## Usage
 
-1. Acesse a interface web em http://localhost:5000
-2. Faça upload de um arquivo de áudio ou grave um novo
-3. Clique em "Classificar Som"
-4. Visualize os resultados da classificação
+1. Access the web interface at http://localhost:5000
+2. Upload an audio file or record a new one
+3. Click on "Classify Sound"
+4. View the classification results
 
-## Treinamento do Modelo
+## Model Training
 
-Para treinar um novo modelo:
+To train a new model:
 
 ```bash
 cd src/ml
