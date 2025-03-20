@@ -8,7 +8,7 @@ from src.backend.audio_processing import process_audio
 from src.ml.inference import SoundClassifier
 
 router = APIRouter()
-classifier = SoundClassifier('./src/ml/modelo_sirenes')
+classifier = SoundClassifier(model_path='./src/ml/modelo_sirenes_raphael')
 
 
 @router.post("/classify")
@@ -38,7 +38,11 @@ async def classify_audio(file: UploadFile = File(...)):
             os.remove(temp_file)
         os.remove(processed_file)
 
-        return JSONResponse(content=result)
+        return JSONResponse(content={
+            "class": result["class"],
+            "confidence": float(result["confidence"]),  # Convert numpy.float32 to Python float
+            "probabilities": {k: float(v) for k, v in result["probabilities"].items()}  # Convert all probabilities to float
+        })
 
     except Exception as e:
         # Clean up on error

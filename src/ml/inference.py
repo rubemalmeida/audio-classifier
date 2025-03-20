@@ -3,12 +3,13 @@ import numpy as np
 import librosa
 import os
 from transformers import WhisperProcessor, WhisperForConditionalGeneration
+from torch.nn.functional import softmax
 
 
 class SoundClassifier:
     def __init__(
         self,
-        model_path="openai/whisper-small",  # Changed to use the pretrained model directly
+        model_path,  # "openai/whisper-small" Changed to use the pretrained model directly
     ):
         # Check if model_path is a directory and doesn't have the required files
         if os.path.isdir(model_path) and not os.path.exists(
@@ -44,43 +45,34 @@ class SoundClassifier:
         inputs = self.processor(audio, sampling_rate=16000, return_tensors="pt")
 
         with torch.no_grad():
-            outputs = self.model.generate(
-                inputs.input_features,
-                language="en",
-                task="transcribe",
-                use_cache=False,
-            )
+            # Access the encoder using get_encoder()
+            encoder = self.model.get_encoder()
+            encoder_outputs = encoder(inputs.input_features)
+            logits = encoder_outputs.last_hidden_state.mean(dim=1)  # Aggregate embeddings
 
-        transcription = self.processor.decode(outputs[0])
-        # Clean up the transcription by removing special tokens before printing
-        cleaned_transcription = transcription.split("<|notimestamps|>")[-1].strip()
-        print(f"Raw transcription: {cleaned_transcription}")  # Debug output
+        # Apply softmax to get probabilities
+        probabilities = softmax(logits, dim=-1).squeeze().cpu().numpy()
+        probabilities2 = softmax(logits, dim=-1)
+        data1, data2 = torch.topk(probabilities2,k=5)
+        print(f"data1={data1}, data2={data2}")
+        top_tokens = [self.processor.decode(idx) for idx in data2.squeeze().tolist()] # Decode top indices
+        print(f"top_tokens={top_tokens}")
 
-        # Extract predicted class from transcription
-        # Fallback to simple keyword matching since we're using a general Whisper model
-        # transcription = transcription.strip().lower()
-        transcription = cleaned_transcription
+        # Map probabilities to classes
+        class_probabilities = {
+            class_name: probabilities[idx]
+            for idx, class_name in self.class_mapping.items()
+        }
 
-        class_match = None
-        for idx, class_name in self.class_mapping.items():
-            if class_name in transcription:
-                class_match = class_name
-                break
-
-        # If no match was found in the transcription, use a simple heuristic
-        if not class_match:
-            class_match = "unknown"
+        # Find the class with the highest probability
+        class_match = max(class_probabilities, key=class_probabilities.get)
+        confidence = class_probabilities[class_match]
 
         # Create a result format that matches the existing frontend expectations
         result = {
             "class": class_match,
-            "confidence": 0.75,
-            "probabilities": {
-                class_name: 0.1 for class_name in self.class_mapping.values()
-            },
+            "confidence": confidence,
+            "probabilities": class_probabilities,
         }
-
-        # Bump up the confidence for the predicted class
-        result["probabilities"][class_match] = 0.75
 
         return result
