@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultClass = document.getElementById('result-class');
     const resultConfidenceValue = document.getElementById('result-confidence-value');
     const confidenceLevel = document.getElementById('confidence-level');
-    const otherProbabilities = document.getElementById('other-probabilities');
+    // const otherProbabilities = document.getElementById('other-probabilities');
     const newClassificationBtn = document.getElementById('new-classification-btn');
     const loadingOverlay = document.getElementById('loading-overlay');
 
@@ -190,25 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Display main result
         resultClass.textContent = formatClassName(result.class);
-        resultConfidenceValue.textContent = `${(result.confidence * 100).toFixed(1)}%`;
+        resultConfidenceValue.textContent = `${(result.confidence).toFixed(3)}%`;
         confidenceLevel.style.width = `${result.confidence * 100}%`;
-
-        // Display other probabilities
-        otherProbabilities.innerHTML = '';
-        const sortedProbs = Object.entries(result.probabilities)
-            .filter(([className]) => className !== result.class)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 4); // Show top 4 other probabilities
-
-        sortedProbs.forEach(([className, prob]) => {
-            const probItem = document.createElement('div');
-            probItem.className = 'probability-item';
-            probItem.innerHTML = `
-            <span class="probability-label">${formatClassName(className)}</span>
-            <span class="probability-value">${(prob * 100).toFixed(1)}%</span>
-        `;
-            otherProbabilities.appendChild(probItem);
-        });
     }
 
     function formatClassName(name) {
