@@ -53,5 +53,5 @@ async def classify_audio(file: UploadFile = File(...)):
 @router.get("/health")
 async def health_check():
     """Check if the API is running and the model is loaded"""
-    model_loaded = classifier.model_path != './src/ml/modelo_sirenes'
+    model_loaded = classifier.is_model_loaded()
     return {"status": "healthy", "model_loaded": model_loaded}
