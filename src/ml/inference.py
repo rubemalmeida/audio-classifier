@@ -14,6 +14,7 @@ class SoundClassifier:
         model_path=DEFAULT_MODEL_PATH,  # Changed to use the pretrained model directly
     ):
         # Check if model_path is a directory and doesn't have the required files
+        self.model_path = model_path
         if os.path.isdir(model_path) and not os.path.exists(
             os.path.join(model_path, "preprocessor_config.json")
         ):
