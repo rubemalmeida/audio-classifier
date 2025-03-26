@@ -1,59 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classificador de Sons Não Vocais</title>
+    <title>Non vocal sound classifier</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Classificador de Sons Não Vocais</h1>
-            <p>Identifique sons como sirenes, quedas de objetos, colisões e mais</p>
+            <h1>Non vocal sound classifier</h1>
+            <p>Identify sounds like sirens, horns, car, motorcycle, bus, and more</p>
         </header>
         
         <main>
             <div class="audio-input-container">
                 <div class="tabs">
-                    <button id="upload-tab" class="tab-btn active">Upload de Áudio</button>
-                    <button id="record-tab" class="tab-btn">Gravar Áudio</button>
+                    <button id="upload-tab" class="tab-btn active">Audio upload</button>
+                    <button id="record-tab" class="tab-btn">Record audio</button>
                 </div>
                 
                 <div id="upload-container" class="tab-content active">
                     <div class="upload-area" id="drop-area">
-                        <p>Arraste e solte um arquivo de áudio ou</p>
+                        <p>Drag and drop an audio file or</p>
                         <input type="file" id="fileInput" accept=".wav" hidden>
-                        <button id="browse-btn">Selecionar arquivo</button>
+                        <button id="browse-btn">Select file</button>
                         <p class="file-info" id="file-info"></p>
                     </div>
-                    <p class="hint">Somente arquivos .wav (máx. 30 segundos)</p>
+                    <p class="hint">Only .wav files (max. 30 seconds)</p>
                 </div>
                 
                 <div id="record-container" class="tab-content">
                     <div class="record-controls">
                         <button id="record-btn" class="record-btn">
                             <span class="record-icon"></span>
-                            <span class="record-text">Iniciar Gravação</span>
+                            <span class="record-text">Start recording</span>
                         </button>
                         <div id="timer" class="timer">00:00</div>
                     </div>
                     <div id="recording-status" class="recording-status"></div>
-                    <p class="hint">Tempo máximo de gravação: 30 segundos</p>
+                    <p class="hint">Maximum recording time: 30 seconds</p>
                 </div>
                 
-                <button id="classify-btn" class="classify-btn" disabled>Classificar Som</button>
+                <button id="classify-btn" class="classify-btn" disabled>Classify sound</button>
             </div>
             
             <div id="result-container" class="result-container hidden">
-                <h2>Resultado da Classificação</h2>
+                <h2>Classification Result</h2>
                 <div class="result-card">
                     <div class="result-primary">
-                        <div class="result-label">Som Identificado:</div>
+                        <div class="result-label">Identified sound:</div>
                         <div id="result-class" class="result-value"></div>
                     </div>
                     <div class="result-confidence">
-                        <div class="result-label">Confiança:</div>
+                        <div class="result-label">Confidence:</div>
                         <div id="result-confidence-value" class="result-value"></div>
                         <div id="confidence-bar" class="confidence-bar">
                             <div id="confidence-level" class="confidence-level"></div>
@@ -61,17 +61,12 @@
                     </div>
                 </div>
                 
-                <div class="result-details">
-                    <h3>Outras possibilidades:</h3>
-                    <div id="other-probabilities" class="other-probabilities"></div>
-                </div>
-                
-                <button id="new-classification-btn" class="new-classification-btn">Nova Classificação</button>
+                <button id="new-classification-btn" class="new-classification-btn">New classification</button>
             </div>
             
             <div id="loading-overlay" class="loading-overlay hidden">
                 <div class="spinner"></div>
-                <p>Processando áudio...</p>
+                <p>Processing audio...</p>
             </div>
         </main>
     </div>

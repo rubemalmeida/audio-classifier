@@ -8,7 +8,7 @@ from src.backend.audio_processing import process_audio
 from src.ml.inference import SoundClassifier
 
 router = APIRouter()
-classifier = SoundClassifier()
+classifier = SoundClassifier(model_path='./src/ml/modelo_sirenes')
 
 
 @router.post("/classify")
@@ -38,7 +38,10 @@ async def classify_audio(file: UploadFile = File(...)):
             os.remove(temp_file)
         os.remove(processed_file)
 
-        return JSONResponse(content=result)
+        return JSONResponse(content={
+            "class": result["class"],
+            "confidence": float(result["confidence"]),  # Convert numpy.float32 to Python float
+        })
 
     except Exception as e:
         # Clean up on error
@@ -49,5 +52,6 @@ async def classify_audio(file: UploadFile = File(...)):
 
 @router.get("/health")
 async def health_check():
-    """Check if the API is running"""
-    return {"status": "healthy", "model_loaded": True}
+    """Check if the API is running and the model is loaded"""
+    model_loaded = classifier.is_model_loaded()
+    return {"status": "healthy", "model_loaded": model_loaded}
