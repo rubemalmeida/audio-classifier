@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('file', audioFile);
 
         try {
-            const response = await fetch('http://localhost:8001/api/classify', {
+            const response = await fetch('http://localhost:8000/api/classify', {
                 method: 'POST',
                 body: formData
             });

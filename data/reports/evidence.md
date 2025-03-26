@@ -131,4 +131,4 @@ Set up the Flask-based web interface:
 python -m src.frontend.app
 ```
 
-Access the web interface at http://localhost:5001 to upload or record audio for classification.
+Access the web interface at http://localhost:5000 to upload or record audio for classification.

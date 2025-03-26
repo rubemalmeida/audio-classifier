@@ -13,11 +13,12 @@ This project is part of a research work aimed at developing a system capable of 
 audio-classifier/
 ├── src/
 │ ├── ml/ # Machine learning modules
+| | ├── model/ # Whisper model
 │ ├── backend/ # FastAPI API
 │ └── frontend/ # Web interface (Flask)
 ├── data/
+| ├── report/ # Project documentation
 │ ├── sounds/ # Training data
-│ └── trained_model/ # Saved models
 └── reports/ 
 ```
 
@@ -58,7 +59,9 @@ audio-classifier/
 To train a new model:
 
 ```bash
-cd src/ml
-python train.py
-```
+# Method 1: Using the training script
+python src/ml/train.py --audio_dir "data/sounds" --model_size "small" --epochs 10
 
+# Method 2: Using the Jupyter notebook
+jupyter notebook src/ml/train.ipynb
+```
