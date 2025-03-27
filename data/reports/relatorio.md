@@ -83,7 +83,7 @@ O Audio Classifier segue uma estrutura modular, dividida em três principais com
   * Utiliza embeddings extraídos dos áudios para prever a categoria sonora e gerar uma descrição textual.
 
 ![Arquitetura do projeto Audio Classifier e interação dos componentes.](figures/figure1.png)
-Fig 1. Arquitetura do projeto Audio Classifier e interação dos componentes.
+Fig. 1. Arquitetura do projeto Audio Classifier e interação dos componentes.
 
 ### Fluxo de classificação
 
@@ -210,8 +210,7 @@ Fig. 4. Acurácia por Época do dataset veículos.
 
 Complementarmente, o gráfico da figura 5 ilustra a rápida convergência do modelo durante o treinamento. Na primeira época, a perda está elevada, com valores acima de dois, mas é perceptível a queda drástica que ocorre na segunda época e, consequentemente, na terceira época, alcançando valores de perda próxima a zero. Nas épocas subsequentes, a perda continua a diminuir e mantém-se em um patamar muito baixo até a oitava época. Essa redução da perda acompanha a melhora da acurácia, o que sugere que o modelo Whisper Small se adapta eficientemente aos dados específicos do dataset de veículos, indicando um *fine tuning* bem-sucedido em um número relativamente pequeno de épocas.
 
-![Loss por Época dataset veículos](figures/figure5.png)  
-Fig. 5. *Loss* por Época dataset veículos.
+![Loss por Época dataset veículos](figures/figure5.png)  Fig. 5. *Loss* por Época dataset veículos.
 
 ## Conclusão
 

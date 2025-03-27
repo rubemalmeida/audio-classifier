@@ -8,7 +8,7 @@ from src.backend.audio_processing import process_audio
 from src.ml.inference import SoundClassifier
 
 router = APIRouter()
-classifier = SoundClassifier(model_path='./src/ml/modelo_sirenes')
+classifier = SoundClassifier(model_path='./src/ml/trained_model')
 
 
 @router.post("/classify")

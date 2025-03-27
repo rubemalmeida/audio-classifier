@@ -105,7 +105,7 @@ The model was trained with the following parameters:
 
 Training results:
 - Final validation accuracy: 92.3%
-- Model saved to: `modelo_sirenes/`
+- Model saved to: `trained_model/`
 
 ## Step 6: Backend and Frontend Deployment
 
