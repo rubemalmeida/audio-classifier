@@ -2,6 +2,8 @@
 
 A GPT/Whisper-based system for identification and transcription of non-vocal sounds, such as sirens, falling objects, collisions, vehicle engines, etc.
 
+![Web interface](data/reports/figures/demo.gif)
+
 ## Description
 
 This project is part of a research work aimed at developing a system capable of transforming non-vocal sounds into textual descriptions. We use a model based on OpenAI's Whisper, fine-tuned to identify different categories of environmental sounds.
@@ -65,3 +67,13 @@ python src/ml/train.py --audio_dir "data/sounds" --model_size "small" --epochs 1
 # Method 2: Using the Jupyter notebook
 jupyter notebook src/ml/train.ipynb
 ```
+
+## Results
+
+Some of the results obtained from the training process are shown below:
+
+![Accuracy rate per epoch](data/reports/figures/fig1.png)
+Figure 1: Accuracy rate per epoch
+
+![Loss rate per epoch](data/reports/figures/fig2.png)
+Figure 2: Loss rate per epoch
