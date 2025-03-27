@@ -111,8 +111,10 @@ python src/ml/train.py --audio_dir "data/sounds" --model_size "small" --epochs 1
 
 Some of the results obtained from the training process are shown below:
 
-![Accuracy rate per epoch](data/reports/figures/fig1.png)
+![Accuracy rate per epoch](data/reports/figures/figure2.png)
+
 Figure 1: Accuracy rate per epoch
 
-![Loss rate per epoch](data/reports/figures/fig2.png)
+![Loss rate per epoch](data/reports/figures/figure3.png)
+
 Figure 2: Loss rate per epoch
